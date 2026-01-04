@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, CheckCircle, FileText, Edit } from 'lucide-react';
+import { ArrowLeft, CheckCircle, FileText, Edit, MapPin } from 'lucide-react';
 import { KYCData } from '../KYCWizard';
 
 interface ReviewDeclarationProps {
@@ -98,6 +98,59 @@ export function ReviewDeclaration({ data, onBack }: ReviewDeclarationProps) {
             <p className="text-gray-900">{data.documents?.length || 0} document(s) uploaded</p>
           </div>
         </div>
+
+        {/* Residence Location */}
+        {data.residenceLocation && (
+          <div className="bg-gray-50 rounded-lg p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-gray-900 flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-emerald-600" />
+                Residence Location
+              </h3>
+              <button type="button" className="text-sm text-emerald-600 hover:text-emerald-700 flex items-center gap-1">
+                <Edit className="w-4 h-4" />
+                Edit
+              </button>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <p className="text-gray-600">Ownership Type</p>
+                <p className="text-gray-900 capitalize">{data.ownershipType || 'Not provided'}</p>
+              </div>
+              {data.ownershipType === 'rented' && (
+                <>
+                  <div>
+                    <p className="text-gray-600">Landlord Name</p>
+                    <p className="text-gray-900">{data.landlordName || 'Not provided'}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Landlord Phone</p>
+                    <p className="text-gray-900">{data.landlordPhone || 'Not provided'}</p>
+                  </div>
+                </>
+              )}
+              <div>
+                <p className="text-gray-600">Nearest Landmark</p>
+                <p className="text-gray-900">{data.landmark || 'Not provided'}</p>
+              </div>
+              <div className="md:col-span-2">
+                <p className="text-gray-600">GPS Coordinates</p>
+                <p className="text-gray-900">
+                  Lat: {data.residenceLocation.lat.toFixed(6)}, Lng: {data.residenceLocation.lng.toFixed(6)}
+                </p>
+                <a
+                  href={`https://www.google.com/maps?q=${data.residenceLocation.lat},${data.residenceLocation.lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-emerald-600 hover:text-emerald-700 inline-flex items-center gap-1 mt-1"
+                >
+                  <MapPin className="w-3 h-3" />
+                  View on Google Maps
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Declarations */}
         <div className="bg-emerald-50 rounded-lg p-6 border border-emerald-200">

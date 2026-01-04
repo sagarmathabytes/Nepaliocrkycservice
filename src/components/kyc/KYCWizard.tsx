@@ -71,8 +71,13 @@ export interface KYCData {
   
   // Residence
   landlordName?: string;
+  landlordPhone?: string;
   landlordAddress?: string;
   landlordContact?: string;
+  landmark?: string;
+  distanceFromLandmark?: string;
+  ownershipType?: 'rented' | 'owned';
+  residenceLocation?: { lat: number; lng: number };
   mapLocation?: string;
   nearestLandmark?: string;
   distanceFromResidence?: string;

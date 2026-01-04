@@ -54,6 +54,7 @@ interface KYCApplication {
       landlordName: string;
       landlordContact: string;
       landmark: string;
+      location?: { lat: number; lng: number };
     };
   };
 }
@@ -560,6 +561,23 @@ export function AdminDashboard() {
                         <p className="text-gray-600">Nearest Landmark</p>
                         <p className="text-gray-900">{selectedKYC.fullData?.residence.landmark}</p>
                       </div>
+                      {selectedKYC.fullData?.residence.location && (
+                        <div className="pt-3 border-t border-gray-200">
+                          <p className="text-gray-600 mb-2">GPS Location</p>
+                          <p className="text-gray-900 mb-2">
+                            {selectedKYC.fullData.residence.location.lat.toFixed(6)}, {selectedKYC.fullData.residence.location.lng.toFixed(6)}
+                          </p>
+                          <a
+                            href={`https://www.google.com/maps?q=${selectedKYC.fullData.residence.location.lat},${selectedKYC.fullData.residence.location.lng}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                          >
+                            <MapPin className="w-4 h-4" />
+                            View on Google Maps
+                          </a>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
