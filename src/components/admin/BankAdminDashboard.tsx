@@ -13,6 +13,7 @@ interface KYCApplication {
   submittedAt: string;
   submittedDate: Date;
   ocrConfidence: number;
+  photograph?: string;
   fullData?: {
     personalInfo: {
       fullNameEn: string;
@@ -22,12 +23,16 @@ interface KYCApplication {
       gender: string;
       nationality: string;
       education: string;
+      photograph?: string;
+      branch: string;
     };
     address: {
       permanent: string;
       present: string;
       mobile: string;
       email: string;
+      residenceTel?: string;
+      officeTel?: string;
     };
     documents: Array<{
       type: string;
@@ -35,6 +40,7 @@ interface KYCApplication {
       issuedBy: string;
       issueDate: string;
       confidence: number;
+      image?: string;
     }>;
     family: Array<{
       relation: string;
@@ -50,11 +56,16 @@ interface KYCApplication {
       isGovEmployee: boolean;
       isPEP: boolean;
       isConvicted: boolean;
+      hasBeneficialOwner?: boolean;
+      hasExistingAccount?: boolean;
+      existingAccountNumber?: string;
     };
     residence: {
       landlordName: string;
       landlordContact: string;
       landmark: string;
+      ownershipType?: string;
+      distanceFromLandmark?: string;
       location?: { lat: number; lng: number };
     };
   };
@@ -87,6 +98,7 @@ export function AdminDashboard() {
       submittedAt: '2026-01-03 10:30',
       submittedDate: new Date('2026-01-03T10:30:00'),
       ocrConfidence: 72,
+      photograph: 'https://images.unsplash.com/photo-1753544202892-59c8462c846e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBuZXBhbGklMjBtYW4lMjBwb3J0cmFpdHxlbnwxfHx8fDE3Njc0OTQ5MDF8MA&ixlib=rb-4.1.0&q=80&w=1080',
       fullData: {
         personalInfo: {
           fullNameEn: 'Ram Bahadur Tamang',
@@ -96,12 +108,16 @@ export function AdminDashboard() {
           gender: 'Male',
           nationality: 'Nepali',
           education: "Bachelor's Degree",
+          photograph: 'https://images.unsplash.com/photo-1753544202892-59c8462c846e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBuZXBhbGklMjBtYW4lMjBwb3J0cmFpdHxlbnwxfHx8fDE3Njc0OTQ5MDF8MA&ixlib=rb-4.1.0&q=80&w=1080',
+          branch: 'Kathmandu Main',
         },
         address: {
           permanent: 'House 123, Thamel, Ward 26, Kathmandu Metropolitan, Kathmandu, Bagmati',
           present: 'House 123, Thamel, Ward 26, Kathmandu Metropolitan, Kathmandu, Bagmati',
           mobile: '9841234567',
           email: 'ram.tamang@example.com',
+          residenceTel: '01-4123456',
+          officeTel: '01-5555555',
         },
         documents: [
           {
@@ -110,6 +126,7 @@ export function AdminDashboard() {
             issuedBy: 'Kathmandu',
             issueDate: '2020-01-15',
             confidence: 95,
+            image: 'https://images.unsplash.com/photo-1760637626138-3c2ff9eca63f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpZGVudGl0eSUyMGRvY3VtZW50JTIwY2FyZHxlbnwxfHx8fDE3Njc1MDU4NzF8MA&ixlib=rb-4.1.0&q=80&w=1080',
           },
         ],
         family: [
@@ -126,11 +143,15 @@ export function AdminDashboard() {
           isGovEmployee: false,
           isPEP: true,
           isConvicted: false,
+          hasBeneficialOwner: false,
+          hasExistingAccount: false,
         },
         residence: {
           landlordName: 'Hari Prasad Sharma',
           landlordContact: '9851234567',
           landmark: 'Near Garden of Dreams',
+          ownershipType: 'rented',
+          distanceFromLandmark: '50 meters',
           location: { lat: 27.7172, lng: 85.3240 },
         },
       },
@@ -147,6 +168,7 @@ export function AdminDashboard() {
       submittedAt: '2026-01-03 11:15',
       submittedDate: new Date('2026-01-03T11:15:00'),
       ocrConfidence: 98,
+      photograph: 'https://images.unsplash.com/photo-1732131504584-238d5322d96c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBuZXBhbGklMjB3b21hbiUyMHBvcnRyYWl0fGVufDF8fHx8MTc2NzQ5NDkwMXww&ixlib=rb-4.1.0&q=80&w=1080',
       fullData: {
         personalInfo: {
           fullNameEn: 'Sita Sharma',
@@ -156,12 +178,15 @@ export function AdminDashboard() {
           gender: 'Female',
           nationality: 'Nepali',
           education: '+2 / Intermediate',
+          photograph: 'https://images.unsplash.com/photo-1732131504584-238d5322d96c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBuZXBhbGklMjB3b21hbiUyMHBvcnRyYWl0fGVufDF8fHx8MTc2NzQ5NDkwMXww&ixlib=rb-4.1.0&q=80&w=1080',
+          branch: 'Thamel',
         },
         address: {
           permanent: 'House 456, Bouddha, Ward 6, Kathmandu Metropolitan, Kathmandu, Bagmati',
           present: 'House 456, Bouddha, Ward 6, Kathmandu Metropolitan, Kathmandu, Bagmati',
           mobile: '9851234567',
           email: 'sita.sharma@example.com',
+          residenceTel: '01-4987654',
         },
         documents: [
           {
@@ -170,6 +195,7 @@ export function AdminDashboard() {
             issuedBy: 'Kathmandu',
             issueDate: '2021-06-10',
             confidence: 98,
+            image: 'https://images.unsplash.com/photo-1712104583793-c98b84188cf1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvZmZpY2lhbCUyMGdvdmVybm1lbnQlMjBkb2N1bWVudHxlbnwxfHx8fDE3Njc1MDU4NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
           },
         ],
         family: [
@@ -186,11 +212,15 @@ export function AdminDashboard() {
           isGovEmployee: false,
           isPEP: false,
           isConvicted: false,
+          hasBeneficialOwner: true,
+          hasExistingAccount: false,
         },
         residence: {
           landlordName: 'Self-owned',
           landlordContact: 'N/A',
           landmark: 'Near Bouddha Stupa',
+          ownershipType: 'owned',
+          distanceFromLandmark: '100 meters',
           location: { lat: 27.7215, lng: 85.3621 },
         },
       },
@@ -207,6 +237,7 @@ export function AdminDashboard() {
       submittedAt: '2026-01-02 14:20',
       submittedDate: new Date('2026-01-02T14:20:00'),
       ocrConfidence: 94,
+      photograph: 'https://images.unsplash.com/photo-1689600944138-da3b150d9cb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMGhlYWRzaG90fGVufDF8fHx8MTc2NzQ5MjQxMnww&ixlib=rb-4.1.0&q=80&w=1080',
       fullData: {
         personalInfo: {
           fullNameEn: 'Rajesh Thapa',
@@ -216,12 +247,16 @@ export function AdminDashboard() {
           gender: 'Male',
           nationality: 'Nepali',
           education: "Master's Degree",
+          photograph: 'https://images.unsplash.com/photo-1689600944138-da3b150d9cb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMGhlYWRzaG90fGVufDF8fHx8MTc2NzQ5MjQxMnww&ixlib=rb-4.1.0&q=80&w=1080',
+          branch: 'Pokhara',
         },
         address: {
           permanent: 'Lakeside, Ward 6, Pokhara Metropolitan, Kaski, Gandaki',
           present: 'Lakeside, Ward 6, Pokhara Metropolitan, Kaski, Gandaki',
           mobile: '9803456789',
           email: 'rajesh.thapa@example.com',
+          residenceTel: '061-540123',
+          officeTel: '061-467890',
         },
         documents: [
           {
@@ -230,6 +265,7 @@ export function AdminDashboard() {
             issuedBy: 'Kaski',
             issueDate: '2019-03-20',
             confidence: 94,
+            image: 'https://images.unsplash.com/photo-1560043669-ce3735171961?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXNzcG9ydCUyMGlkZW50aWZpY2F0aW9ufGVufDF8fHx8MTc2NzUwNTg3Nnww&ixlib=rb-4.1.0&q=80&w=1080',
           },
         ],
         family: [
@@ -246,11 +282,16 @@ export function AdminDashboard() {
           isGovEmployee: false,
           isPEP: false,
           isConvicted: false,
+          hasBeneficialOwner: false,
+          hasExistingAccount: true,
+          existingAccountNumber: 'ACC-2015-1234',
         },
         residence: {
           landlordName: 'Self-owned',
           landlordContact: 'N/A',
           landmark: 'Near Fewa Lake',
+          ownershipType: 'owned',
+          distanceFromLandmark: '200 meters',
           location: { lat: 28.2096, lng: 83.9856 },
         },
       },
@@ -987,54 +1028,87 @@ export function AdminDashboard() {
               <div className="space-y-4">
                 {filteredKYCs.map(kyc => (
                   <div key={kyc.id} className="border-2 border-gray-200 rounded-lg p-6 hover:border-emerald-500 transition-colors">
-                    <div className="flex items-start justify-between mb-4">
-                      <div>
-                        <h3 className="text-gray-900 mb-1">{kyc.name}</h3>
-                        <p className="text-sm text-gray-600">{kyc.id} • {kyc.mobile}</p>
-                      </div>
-                      <div className="flex gap-2">
-                        {kyc.isPEP && (
-                          <span className="px-3 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">PEP</span>
+                    <div className="flex gap-6 mb-4">
+                      {/* Photos Section */}
+                      <div className="flex gap-3 flex-shrink-0">
+                        {kyc.photograph && (
+                          <div className="flex flex-col items-center">
+                            <div className="w-24 h-24 rounded-lg overflow-hidden border-2 border-gray-300 shadow-sm">
+                              <img 
+                                src={kyc.photograph} 
+                                alt={kyc.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <p className="text-xs text-gray-600 mt-1">Profile</p>
+                          </div>
                         )}
-                        <span className={`px-3 py-1 text-xs rounded-full ${
-                          kyc.riskLevel === 'high' ? 'bg-red-100 text-red-700' : 
-                          kyc.riskLevel === 'medium' ? 'bg-yellow-100 text-yellow-700' :
-                          'bg-green-100 text-green-700'
-                        }`}>
-                          {kyc.riskLevel.toUpperCase()} RISK
-                        </span>
-                        <span className={`px-3 py-1 text-xs rounded-full ${
-                          kyc.status === 'approved' ? 'bg-green-100 text-green-700' :
-                          kyc.status === 'rejected' ? 'bg-red-100 text-red-700' :
-                          'bg-blue-100 text-blue-700'
-                        }`}>
-                          {kyc.status.toUpperCase()}
-                        </span>
+                        {kyc.fullData?.documents[0]?.image && (
+                          <div className="flex flex-col items-center">
+                            <div className="w-24 h-24 rounded-lg overflow-hidden border-2 border-gray-300 shadow-sm">
+                              <img 
+                                src={kyc.fullData.documents[0].image} 
+                                alt="Citizenship"
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <p className="text-xs text-gray-600 mt-1">Citizenship</p>
+                          </div>
+                        )}
                       </div>
-                    </div>
 
-                    <div className="grid grid-cols-4 gap-4 text-sm mb-4">
-                      <div>
-                        <p className="text-gray-600">Branch</p>
-                        <p className="text-gray-900">{kyc.branch}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-600">Submitted</p>
-                        <p className="text-gray-900">{kyc.submittedAt}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-600">OCR Confidence</p>
-                        <p className={`${kyc.ocrConfidence > 90 ? 'text-green-600' : 'text-orange-600'}`}>
-                          {kyc.ocrConfidence}%
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-600">Status</p>
-                        <p className={`capitalize ${
-                          kyc.status === 'approved' ? 'text-green-600' :
-                          kyc.status === 'rejected' ? 'text-red-600' :
-                          'text-blue-600'
-                        }`}>{kyc.status}</p>
+                      {/* Application Info */}
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <h3 className="text-gray-900 mb-1">{kyc.name}</h3>
+                            <p className="text-sm text-gray-600">{kyc.id} • {kyc.mobile}</p>
+                          </div>
+                          <div className="flex gap-2">
+                            {kyc.isPEP && (
+                              <span className="px-3 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">PEP</span>
+                            )}
+                            <span className={`px-3 py-1 text-xs rounded-full ${
+                              kyc.riskLevel === 'high' ? 'bg-red-100 text-red-700' : 
+                              kyc.riskLevel === 'medium' ? 'bg-yellow-100 text-yellow-700' :
+                              'bg-green-100 text-green-700'
+                            }`}>
+                              {kyc.riskLevel.toUpperCase()} RISK
+                            </span>
+                            <span className={`px-3 py-1 text-xs rounded-full ${
+                              kyc.status === 'approved' ? 'bg-green-100 text-green-700' :
+                              kyc.status === 'rejected' ? 'bg-red-100 text-red-700' :
+                              'bg-blue-100 text-blue-700'
+                            }`}>
+                              {kyc.status.toUpperCase()}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-4 gap-4 text-sm">
+                          <div>
+                            <p className="text-gray-600">Branch</p>
+                            <p className="text-gray-900">{kyc.branch}</p>
+                          </div>
+                          <div>
+                            <p className="text-gray-600">Submitted</p>
+                            <p className="text-gray-900">{kyc.submittedAt}</p>
+                          </div>
+                          <div>
+                            <p className="text-gray-600">OCR Confidence</p>
+                            <p className={`${kyc.ocrConfidence > 90 ? 'text-green-600' : 'text-orange-600'}`}>
+                              {kyc.ocrConfidence}%
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-gray-600">Status</p>
+                            <p className={`capitalize ${
+                              kyc.status === 'approved' ? 'text-green-600' :
+                              kyc.status === 'rejected' ? 'text-red-600' :
+                              'text-blue-600'
+                            }`}>{kyc.status}</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -1119,6 +1193,46 @@ export function AdminDashboard() {
               <div className="grid grid-cols-3 gap-6">
                 {/* Main Content */}
                 <div className="col-span-2 space-y-6">
+                  {/* Profile Picture & Basic Info */}
+                  {selectedKYC.photograph && (
+                    <div className="bg-gradient-to-r from-emerald-50 to-blue-50 rounded-lg p-6 border border-emerald-200">
+                      <div className="flex items-start gap-6">
+                        <div className="flex-shrink-0">
+                          <div className="w-32 h-32 rounded-lg overflow-hidden border-4 border-white shadow-lg">
+                            <img 
+                              src={selectedKYC.photograph} 
+                              alt={selectedKYC.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <p className="text-xs text-center text-gray-600 mt-2">Customer Photo</p>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl text-gray-900 mb-2">{selectedKYC.fullData?.personalInfo.fullNameEn}</h3>
+                          <p className="text-lg text-gray-700 mb-3">{selectedKYC.fullData?.personalInfo.fullNameNe}</p>
+                          <div className="grid grid-cols-2 gap-3 text-sm">
+                            <div>
+                              <p className="text-gray-600">Application ID</p>
+                              <p className="text-gray-900">{selectedKYC.id}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-600">Branch</p>
+                              <p className="text-gray-900">{selectedKYC.fullData?.personalInfo.branch}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-600">Mobile</p>
+                              <p className="text-gray-900">{selectedKYC.fullData?.address.mobile}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-600">Email</p>
+                              <p className="text-gray-900 truncate">{selectedKYC.fullData?.address.email}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Personal Info */}
                   <div className="bg-gray-50 rounded-lg p-6">
                     <h3 className="text-gray-900 mb-4 flex items-center gap-2">
@@ -1181,6 +1295,18 @@ export function AdminDashboard() {
                           <p className="text-gray-600">Email</p>
                           <p className="text-gray-900">{selectedKYC.fullData?.address.email}</p>
                         </div>
+                        {selectedKYC.fullData?.address.residenceTel && (
+                          <div>
+                            <p className="text-gray-600">Residence Telephone</p>
+                            <p className="text-gray-900">{selectedKYC.fullData.address.residenceTel}</p>
+                          </div>
+                        )}
+                        {selectedKYC.fullData?.address.officeTel && (
+                          <div>
+                            <p className="text-gray-600">Office Telephone</p>
+                            <p className="text-gray-900">{selectedKYC.fullData.address.officeTel}</p>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -1193,13 +1319,35 @@ export function AdminDashboard() {
                     </h3>
                     {selectedKYC.fullData?.documents.map((doc, idx) => (
                       <div key={idx} className="bg-white rounded-lg p-4 mb-3 border border-gray-200">
+                        {/* Document Image */}
+                        {doc.image && (
+                          <div className="mb-4">
+                            <div className="relative rounded-lg overflow-hidden border-2 border-gray-300 shadow-md">
+                              <img 
+                                src={doc.image} 
+                                alt={doc.type}
+                                className="w-full h-auto object-contain max-h-64"
+                              />
+                              <div className="absolute top-2 right-2">
+                                <span className={`text-xs px-3 py-1.5 rounded-full shadow-lg ${
+                                  doc.confidence > 90 ? 'bg-green-600 text-white' : 'bg-yellow-600 text-white'
+                                }`}>
+                                  {doc.confidence}% OCR Confidence
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
                         <div className="flex items-center justify-between mb-3">
                           <span className="text-sm text-gray-900">{doc.type}</span>
-                          <span className={`text-xs px-2 py-1 rounded ${
-                            doc.confidence > 90 ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
-                          }`}>
-                            {doc.confidence}% Confidence
-                          </span>
+                          {!doc.image && (
+                            <span className={`text-xs px-2 py-1 rounded ${
+                              doc.confidence > 90 ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                            }`}>
+                              {doc.confidence}% Confidence
+                            </span>
+                          )}
                         </div>
                         <div className="grid grid-cols-2 gap-3 text-sm">
                           <div>
@@ -1267,6 +1415,12 @@ export function AdminDashboard() {
                   <div className="bg-gray-50 rounded-lg p-6">
                     <h3 className="text-gray-900 mb-4">Residence Verification</h3>
                     <div className="space-y-3 text-sm">
+                      {selectedKYC.fullData?.residence.ownershipType && (
+                        <div>
+                          <p className="text-gray-600">Ownership Type</p>
+                          <p className="text-gray-900 capitalize">{selectedKYC.fullData.residence.ownershipType}</p>
+                        </div>
+                      )}
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <p className="text-gray-600">Landlord Name</p>
@@ -1277,9 +1431,17 @@ export function AdminDashboard() {
                           <p className="text-gray-900">{selectedKYC.fullData?.residence.landlordContact}</p>
                         </div>
                       </div>
-                      <div>
-                        <p className="text-gray-600">Nearest Landmark</p>
-                        <p className="text-gray-900">{selectedKYC.fullData?.residence.landmark}</p>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-gray-600">Nearest Landmark</p>
+                          <p className="text-gray-900">{selectedKYC.fullData?.residence.landmark}</p>
+                        </div>
+                        {selectedKYC.fullData?.residence.distanceFromLandmark && (
+                          <div>
+                            <p className="text-gray-600">Distance from Landmark</p>
+                            <p className="text-gray-900">{selectedKYC.fullData.residence.distanceFromLandmark}</p>
+                          </div>
+                        )}
                       </div>
                       {selectedKYC.fullData?.residence.location && (
                         <div className="pt-3 border-t border-gray-200">
@@ -1375,6 +1537,28 @@ export function AdminDashboard() {
                           {selectedKYC.fullData?.compliance.isConvicted ? 'Yes' : 'No'}
                         </span>
                       </div>
+                      {selectedKYC.fullData?.compliance.hasBeneficialOwner !== undefined && (
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-gray-600">Has Beneficial Owner</span>
+                          <span className={selectedKYC.fullData?.compliance.hasBeneficialOwner ? 'text-blue-600' : 'text-gray-600'}>
+                            {selectedKYC.fullData?.compliance.hasBeneficialOwner ? 'Yes' : 'No'}
+                          </span>
+                        </div>
+                      )}
+                      {selectedKYC.fullData?.compliance.hasExistingAccount !== undefined && (
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-gray-600">Has Existing Account</span>
+                          <span className={selectedKYC.fullData?.compliance.hasExistingAccount ? 'text-blue-600' : 'text-gray-600'}>
+                            {selectedKYC.fullData?.compliance.hasExistingAccount ? 'Yes' : 'No'}
+                          </span>
+                        </div>
+                      )}
+                      {selectedKYC.fullData?.compliance.existingAccountNumber && (
+                        <div className="pt-2 border-t border-gray-200">
+                          <p className="text-xs text-gray-600">Existing Account Number</p>
+                          <p className="text-sm text-gray-900 mt-1">{selectedKYC.fullData.compliance.existingAccountNumber}</p>
+                        </div>
+                      )}
                     </div>
                   </div>
 
